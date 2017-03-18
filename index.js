@@ -14,8 +14,20 @@
 //. `Either a b` is either a Left whose value is of type `a` or a Right whose
 //. value is of type `b`.
 //.
-//. The Either type satisfies the [Setoid][], [Semigroup][], [Monad][],
-//. [Alt][], [Traversable][], [Extend][], and [Bifunctor][] specifications.
+//. `Either a b` satisfies the following [Fantasy Land][] specifications:
+//.
+//.   - [Setoid][]
+//.   - [Semigroup][] (if `a` and `b` satisfy Semigroup)
+//.   - [Functor][]
+//.   - [Bifunctor][]
+//.   - [Apply][]
+//.   - [Applicative][]
+//.   - [Chain][]
+//.   - [Monad][]
+//.   - [Alt][]
+//.   - [Foldable][]
+//.   - [Traversable][]
+//.   - [Extend][]
 
 (function(f) {
 
@@ -374,8 +386,13 @@
 
 //. [Alt]:                          v:fantasyland/fantasy-land#alt
 //. [Applicative]:                  v:fantasyland/fantasy-land#applicative
+//. [Apply]:                        v:fantasyland/fantasy-land#apply
 //. [Bifunctor]:                    v:fantasyland/fantasy-land#bifunctor
+//. [Chain]:                        v:fantasyland/fantasy-land#chain
 //. [Extend]:                       v:fantasyland/fantasy-land#extend
+//. [Fantasy Land]:                 v:fantasyland/fantasy-land
+//. [Foldable]:                     v:fantasyland/fantasy-land#foldable
+//. [Functor]:                      v:fantasyland/fantasy-land#functor
 //. [Monad]:                        v:fantasyland/fantasy-land#monad
 //. [Semigroup]:                    v:fantasyland/fantasy-land#semigroup
 //. [Setoid]:                       v:fantasyland/fantasy-land#setoid

@@ -2,6 +2,7 @@ DOCTEST = node_modules/.bin/doctest --module commonjs --prefix .
 ESLINT = node_modules/.bin/eslint --config node_modules/sanctuary-style/eslint-es3.json --env es3
 MOCHA = node_modules/.bin/mocha --ui tdd
 NPM = npm
+REMARK = node_modules/.bin/remark --frail --no-stdout
 REMEMBER_BOWER = node_modules/.bin/remember-bower
 TRANSCRIBE = node_modules/.bin/transcribe
 XYZ = node_modules/.bin/xyz --repo git@github.com:sanctuary-js/sanctuary-either.git --script scripts/prepublish
@@ -46,13 +47,13 @@ lint:
 	  --rule 'max-len: [off]' \
 	  -- test
 	$(REMEMBER_BOWER) $(shell pwd)
-	@echo 'Checking for missing link definitions...'
-	grep -o '\[[^]]*\]\[[^]]*\]' index.js \
-	| sort -u \
-	| sed -e 's:\[\(.*\)\]\[\]:\1:' \
-	      -e 's:\[.*\]\[\(.*\)\]:\1:' \
-	      -e '/0-9/d' \
-	| xargs -I '{}' sh -c "grep '^//[.] \[{}\]: ' index.js"
+	rm -f README.md
+	VERSION=0.0.0 make README.md
+	$(REMARK) \
+	  --use remark-lint-no-undefined-references \
+	  --use remark-lint-no-unused-definitions \
+	  -- README.md
+	git checkout README.md
 
 
 .PHONY: release-major release-minor release-patch

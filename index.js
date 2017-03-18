@@ -21,7 +21,6 @@
 
   'use strict';
 
-  /* istanbul ignore else */
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = f(require('sanctuary-type-classes'));
   } else if (typeof define === 'function' && define.amd != null) {

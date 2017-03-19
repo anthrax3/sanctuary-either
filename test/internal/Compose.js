@@ -17,7 +17,7 @@ module.exports = function Compose(F) {
       this.value = value;
     }
 
-    ComposeFG['@@type'] = 'sanctuary/Compose';
+    ComposeFG['@@type'] = 'sanctuary-either/Compose';
 
     ComposeFG[FL.of] = function(x) {
       return ComposeFG(of(F)(of(G)(x)));

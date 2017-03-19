@@ -10,7 +10,7 @@ function Identity(value) {
   this.value = value;
 }
 
-Identity['@@type'] = 'sanctuary/Identity';
+Identity['@@type'] = 'sanctuary-either/Identity';
 
 Identity[FL.of] = Identity;
 

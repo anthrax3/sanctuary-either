@@ -9,9 +9,7 @@ var Z = require('sanctuary-type-classes');
 
 var Either = require('..');
 
-var EitherArb = require('./EitherArb');
 var Identity = require('./Identity');
-var IdentityArb = require('./IdentityArb');
 
 
 var Left = Either.Left;
@@ -22,6 +20,17 @@ function eq(actual, expected) {
   assert.strictEqual(arguments.length, eq.length);
   assert.strictEqual(Z.toString(actual), Z.toString(expected));
   assert.strictEqual(Z.equals(actual, expected), true);
+}
+
+//  EitherArb :: Arbitrary a -> Arbitrary b -> Arbitrary (Either a b)
+function EitherArb(lArb, rArb) {
+  return jsc.oneof(lArb.smap(Either.Left, value, Z.toString),
+                   rArb.smap(Either.Right, value, Z.toString));
+}
+
+//  IdentityArb :: Arbitrary a -> Arbitrary (Identity a)
+function IdentityArb(arb) {
+  return arb.smap(Identity, value, Z.toString);
 }
 
 //  add_ :: (Number, Number) -> Number
@@ -38,6 +47,9 @@ function squareRoot(n) {
 
 //  toUpper :: String -> String
 function toUpper(s) { return s.toUpperCase(); }
+
+//  value :: { value :: a } -> a
+function value(o) { return o.value; }
 
 
 suite('Left', function() {

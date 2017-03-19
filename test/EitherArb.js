@@ -3,7 +3,7 @@
 var jsc = require('jsverify');
 var Z = require('sanctuary-type-classes');
 
-var Either = require('../..');
+var Either = require('..');
 
 
 //  value :: { value :: a } -> a

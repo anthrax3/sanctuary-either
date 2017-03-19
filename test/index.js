@@ -3,16 +3,15 @@
 var assert = require('assert');
 
 var FL = require('fantasy-land');
+var laws = require('fantasy-laws');
 var jsc = require('jsverify');
 var Z = require('sanctuary-type-classes');
 
 var Either = require('..');
 
-var EitherArb = require('./internal/EitherArb');
-var Identity = require('./internal/Identity');
-var IdentityArb = require('./internal/IdentityArb');
-var equals = require('./internal/equals');
-var laws = require('./internal/laws');
+var EitherArb = require('./EitherArb');
+var Identity = require('./Identity');
+var IdentityArb = require('./IdentityArb');
 
 
 var Left = Either.Left;
@@ -201,193 +200,191 @@ suite('Either', function() {
 
   suite('Setoid laws', function() {
 
-    var setoidLaws = laws.Setoid;
+    test('reflexivity',
+         laws.Setoid.reflexivity(
+           EitherArb(jsc.string, jsc.falsy)
+         ));
 
-    setoidLaws.reflexivity(
-      EitherArb(jsc.string, jsc.falsy)
-    );
+    test('symmetry',
+         laws.Setoid.symmetry(
+           EitherArb(jsc.bool, jsc.bool),
+           EitherArb(jsc.bool, jsc.bool)
+         ));
 
-    setoidLaws.symmetry(
-      EitherArb(jsc.bool, jsc.bool),
-      EitherArb(jsc.bool, jsc.bool)
-    );
-
-    setoidLaws.transitivity(
-      EitherArb(jsc.bool, jsc.bool),
-      EitherArb(jsc.bool, jsc.bool),
-      EitherArb(jsc.bool, jsc.bool)
-    );
+    test('transitivity',
+         laws.Setoid.transitivity(
+           EitherArb(jsc.bool, jsc.bool),
+           EitherArb(jsc.bool, jsc.bool),
+           EitherArb(jsc.bool, jsc.bool)
+         ));
 
   });
 
   suite('Semigroup laws', function() {
 
-    var semigroupLaws = laws.Semigroup(equals);
-
-    semigroupLaws.associativity(
-      EitherArb(jsc.string, jsc.string),
-      EitherArb(jsc.string, jsc.string),
-      EitherArb(jsc.string, jsc.string)
-    );
+    test('associativity',
+         laws.Semigroup(Z.equals).associativity(
+           EitherArb(jsc.string, jsc.string),
+           EitherArb(jsc.string, jsc.string),
+           EitherArb(jsc.string, jsc.string)
+         ));
 
   });
 
   suite('Functor laws', function() {
 
-    var functorLaws = laws.Functor(equals);
+    test('identity',
+         laws.Functor(Z.equals).identity(
+           EitherArb(jsc.string, jsc.number)
+         ));
 
-    functorLaws.identity(
-      EitherArb(jsc.string, jsc.number)
-    );
-
-    functorLaws.composition(
-      EitherArb(jsc.string, jsc.number),
-      jsc.constant(Math.sqrt),
-      jsc.constant(Math.abs)
-    );
+    test('composition',
+         laws.Functor(Z.equals).composition(
+           EitherArb(jsc.string, jsc.number),
+           jsc.constant(Math.sqrt),
+           jsc.constant(Math.abs)
+         ));
 
   });
 
   suite('Bifunctor laws', function() {
 
-    var bifunctorLaws = laws.Bifunctor(equals);
+    test('identity',
+         laws.Bifunctor(Z.equals).identity(
+           EitherArb(jsc.string, jsc.number)
+         ));
 
-    bifunctorLaws.identity(
-      EitherArb(jsc.string, jsc.number)
-    );
-
-    bifunctorLaws.composition(
-      EitherArb(jsc.string, jsc.number),
-      jsc.constant(Math.sqrt),
-      jsc.constant(function(s) { return s.length; }),
-      jsc.constant(Math.sqrt),
-      jsc.constant(Math.abs)
-    );
+    test('composition',
+         laws.Bifunctor(Z.equals).composition(
+           EitherArb(jsc.string, jsc.number),
+           jsc.constant(Math.sqrt),
+           jsc.constant(function(s) { return s.length; }),
+           jsc.constant(Math.sqrt),
+           jsc.constant(Math.abs)
+         ));
 
   });
 
   suite('Apply laws', function() {
 
-    var applyLaws = laws.Apply(equals);
-
-    applyLaws.composition(
-      EitherArb(jsc.string, jsc.constant(Math.sqrt)),
-      EitherArb(jsc.string, jsc.constant(Math.abs)),
-      EitherArb(jsc.string, jsc.number)
-    );
+    test('composition',
+         laws.Apply(Z.equals).composition(
+           EitherArb(jsc.string, jsc.constant(Math.sqrt)),
+           EitherArb(jsc.string, jsc.constant(Math.abs)),
+           EitherArb(jsc.string, jsc.number)
+         ));
 
   });
 
   suite('Applicative laws', function() {
 
-    var applicativeLaws = laws.Applicative(equals, Either);
+    test('identity',
+         laws.Applicative(Z.equals, Either).identity(
+           EitherArb(jsc.string, jsc.number)
+         ));
 
-    applicativeLaws.identity(
-      EitherArb(jsc.string, jsc.number)
-    );
+    test('homomorphism',
+         laws.Applicative(Z.equals, Either).homomorphism(
+           jsc.constant(Math.abs),
+           jsc.number
+         ));
 
-    applicativeLaws.homomorphism(
-      jsc.constant(Math.abs),
-      jsc.number
-    );
-
-    applicativeLaws.interchange(
-      EitherArb(jsc.string, jsc.constant(Math.abs)),
-      jsc.number
-    );
+    test('interchange',
+         laws.Applicative(Z.equals, Either).interchange(
+           EitherArb(jsc.string, jsc.constant(Math.abs)),
+           jsc.number
+         ));
 
   });
 
   suite('Chain laws', function() {
 
-    var chainLaws = laws.Chain(equals);
-
-    chainLaws.associativity(
-      EitherArb(jsc.string, jsc.array(jsc.number)),
-      jsc.constant(function(xs) { return xs.length > 0 ? Right(xs[0]) : Left('Empty list'); }),
-      jsc.constant(squareRoot)
-    );
+    test('associativity',
+         laws.Chain(Z.equals).associativity(
+           EitherArb(jsc.string, jsc.array(jsc.number)),
+           jsc.constant(function(xs) { return xs.length > 0 ? Right(xs[0]) : Left('Empty list'); }),
+           jsc.constant(squareRoot)
+         ));
 
   });
 
   suite('Monad laws', function() {
 
-    var monadLaws = laws.Monad(equals, Either);
+    test('left identity',
+         laws.Monad(Z.equals, Either).leftIdentity(
+           jsc.constant(squareRoot),
+           jsc.number
+         ));
 
-    monadLaws.leftIdentity(
-      jsc.constant(squareRoot),
-      jsc.number
-    );
-
-    monadLaws.rightIdentity(
-      EitherArb(jsc.string, jsc.number)
-    );
+    test('right identity',
+         laws.Monad(Z.equals, Either).rightIdentity(
+           EitherArb(jsc.string, jsc.number)
+         ));
 
   });
 
   suite('Alt laws', function() {
 
-    var altLaws = laws.Alt(equals);
+    test('associativity',
+         laws.Alt(Z.equals).associativity(
+           EitherArb(jsc.string, jsc.number),
+           EitherArb(jsc.string, jsc.number),
+           EitherArb(jsc.string, jsc.number)
+         ));
 
-    altLaws.associativity(
-      EitherArb(jsc.string, jsc.number),
-      EitherArb(jsc.string, jsc.number),
-      EitherArb(jsc.string, jsc.number)
-    );
-
-    altLaws.distributivity(
-      EitherArb(jsc.string, jsc.number),
-      EitherArb(jsc.string, jsc.number),
-      jsc.constant(Math.sqrt)
-    );
+    test('distributivity',
+         laws.Alt(Z.equals).distributivity(
+           EitherArb(jsc.string, jsc.number),
+           EitherArb(jsc.string, jsc.number),
+           jsc.constant(Math.sqrt)
+         ));
 
   });
 
   suite('Foldable laws', function() {
 
-    var foldableLaws = laws.Foldable(equals);
-
-    foldableLaws.associativity(
-      jsc.constant(add_),
-      jsc.number,
-      EitherArb(jsc.string, jsc.number)
-    );
+    test('associativity',
+         laws.Foldable(Z.equals).associativity(
+           jsc.constant(add_),
+           jsc.number,
+           EitherArb(jsc.string, jsc.number)
+         ));
 
   });
 
   suite('Traversable laws', function() {
 
-    var traversableLaws = laws.Traversable(equals);
+    test('naturality',
+         laws.Traversable(Z.equals).naturality(
+           jsc.constant(function(right) { return [right.value]; }),
+           EitherArb(jsc.string, IdentityArb(jsc.number)),
+           jsc.constant(Identity),
+           jsc.constant(Array)
+         ));
 
-    traversableLaws.naturality(
-      jsc.constant(function(right) { return [right.value]; }),
-      EitherArb(jsc.string, IdentityArb(jsc.number)),
-      jsc.constant(Identity),
-      jsc.constant(Array)
-    );
+    test('identity',
+         laws.Traversable(Z.equals).identity(
+           EitherArb(jsc.string, jsc.number),
+           jsc.constant(Identity)
+         ));
 
-    traversableLaws.identity(
-      EitherArb(jsc.string, jsc.number),
-      jsc.constant(Identity)
-    );
-
-    traversableLaws.composition(
-      EitherArb(jsc.string, IdentityArb(EitherArb(jsc.string, jsc.number))),
-      jsc.constant(Identity),
-      jsc.constant(Either)
-    );
+    test('composition',
+         laws.Traversable(Z.equals).composition(
+           EitherArb(jsc.string, IdentityArb(EitherArb(jsc.string, jsc.number))),
+           jsc.constant(Identity),
+           jsc.constant(Either)
+         ));
 
   });
 
   suite('Extend laws', function() {
 
-    var extendLaws = laws.Extend(equals);
-
-    extendLaws.associativity(
-      EitherArb(jsc.string, jsc.integer),
-      jsc.constant(function(either) { return either.value + 1; }),
-      jsc.constant(function(either) { return either.value * either.value; })
-    );
+    test('associativity',
+         laws.Extend(Z.equals).associativity(
+           EitherArb(jsc.string, jsc.integer),
+           jsc.constant(function(either) { return either.value + 1; }),
+           jsc.constant(function(either) { return either.value * either.value; })
+         ));
 
   });
 

@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "doctest": "0.11.x",
-    "eslint": "2.9.x",
+    "eslint": "3.19.x",
     "fantasy-land": "3.1.0",
     "fantasy-laws": "fantasyland/fantasy-laws#19168d0b383d9f3d180cd770ce9201144d148214",
     "jsverify": "0.7.x",
@@ -25,7 +25,7 @@
     "remark-lint-no-unused-definitions": "1.x.x",
     "remember-bower": "0.1.x",
     "sanctuary-identity": "sanctuary-js/sanctuary-identity#ac2064adf01dca74003dcb56a08fd2dec29f1042",
-    "sanctuary-style": "0.4.x",
+    "sanctuary-style": "0.5.x",
     "transcribe": "1.0.x",
     "xyz": "2.1.x"
   },

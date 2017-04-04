@@ -56,6 +56,13 @@
     this.isLeft = tag === 'Left';
     this.isRight = tag === 'Right';
     this.value = value;
+
+    //  Add "fantasy-land/concat" method conditionally so that Left('abc')
+    //  and Right('abc') satisfy the requirements of Semigroup but Left(123)
+    //  and Right(123) do not.
+    if (Z.Semigroup.test(this.value)) {
+      this['fantasy-land/concat'] = Either$prototype$concat;
+    }
   }
 
   //# Either.Left :: a -> Either a b
@@ -204,11 +211,11 @@
   //. > Z.concat(Right([1, 2, 3]), Left('abc'))
   //. Right([1, 2, 3])
   //. ```
-  Either.prototype['fantasy-land/concat'] = function(other) {
+  function Either$prototype$concat(other) {
     return this.isLeft ?
       other.isLeft ? Left(Z.concat(this.value, other.value)) : other :
       other.isLeft ? this : Right(Z.concat(this.value, other.value));
-  };
+  }
 
   //# Either#fantasy-land/map :: Either a b ~> (b -> c) -> Either a c
   //.

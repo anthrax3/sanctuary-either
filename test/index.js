@@ -87,6 +87,9 @@ suite('Left', function() {
     eq(Left('abc')[FL.concat].length, 1);
     eq(Left('abc')[FL.concat](Left('def')), Left('abcdef'));
     eq(Left('abc')[FL.concat](Right('xyz')), Right('xyz'));
+
+    eq(Z.Semigroup.test(Left('abc')), true);
+    eq(Z.Semigroup.test(Left(123)), false);
   });
 
   test('"fantasy-land/equals" method', function() {
@@ -165,6 +168,9 @@ suite('Right', function() {
     eq(Right('abc')[FL.concat].length, 1);
     eq(Right('abc')[FL.concat](Left('xyz')), Right('abc'));
     eq(Right('abc')[FL.concat](Right('def')), Right('abcdef'));
+
+    eq(Z.Semigroup.test(Right('abc')), true);
+    eq(Z.Semigroup.test(Right(123)), false);
   });
 
   test('"fantasy-land/equals" method', function() {

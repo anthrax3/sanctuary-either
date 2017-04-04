@@ -344,10 +344,11 @@
 
   //# Either#fantasy-land/traverse :: Applicative f => Either a b ~> (TypeRep f, b -> f c) -> f (Either a c)
   //.
-  //. Takes two functions which both return values of the same [Applicative][],
-  //. (the second of which must be that type's [`of`][] function) and returns:
+  //. Takes the type representative of some [Applicative][] and a function
+  //. which returns a value of that Applicative, and returns:
   //.
-  //.   - the result of applying `of` to `this` if `this` is a Left; otherwise
+  //.   - the result of applying the type representative's [`of`][] function to
+  //.     `this` if `this` is a Left; otherwise
   //.
   //.   - the result of mapping [`Right`](#Right) over the result of applying
   //.     the first function to this Right's value.

@@ -93,8 +93,13 @@
 
   //# Either.@@type :: String
   //.
-  //. Either type identifier, `'sanctuary/Either'`.
-  Either['@@type'] = 'sanctuary/Either';
+  //. Either [type identifier][].
+  //.
+  //. ```javascript
+  //. > Either['@@type']
+  //. 'sanctuary/Either@1'
+  //. ```
+  Either['@@type'] = 'sanctuary/Either@1';
 
   //# Either.fantasy-land/of :: b -> Either a b
   //.
@@ -409,4 +414,5 @@
 //. [`Either#fantasy-land/map`]:    #Either.prototype.fantasy-land/map
 //. [`Either#toString`]:            #Either.prototype.toString
 //. [`of`]:                         v:fantasyland/fantasy-land#of-method
+//. [type identifier]:              https://github.com/sanctuary-js/sanctuary-type-identifiers
 //. [type representative]:          https://sanctuary.js.org/#type-representatives

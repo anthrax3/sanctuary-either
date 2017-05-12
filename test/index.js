@@ -99,8 +99,8 @@ suite('Left', function() {
     eq(Left(42)[FL.equals](Right(42)), false);
 
     // Value-based equality:
-    eq(Left(0)[FL.equals](Left(-0)), false);
-    eq(Left(-0)[FL.equals](Left(0)), false);
+    eq(Left(0)[FL.equals](Left(-0)), true);
+    eq(Left(-0)[FL.equals](Left(0)), true);
     eq(Left(NaN)[FL.equals](Left(NaN)), true);
     eq(Left([1, 2, 3])[FL.equals](Left([1, 2, 3])), true);
   });
@@ -108,6 +108,16 @@ suite('Left', function() {
   test('"fantasy-land/extend" method', function() {
     eq(Left('abc')[FL.extend].length, 1);
     eq(Left('abc')[FL.extend](function(x) { return x / 2; }), Left('abc'));
+  });
+
+  test('"fantasy-land/lte" method', function() {
+    eq(Z.lte(Left(1), Right(1)), true);
+    eq(Z.lte(Left(1), Left(0)), false);
+    eq(Z.lte(Left(1), Left(1)), true);
+    eq(Z.lte(Left(1), Left(2)), true);
+
+    eq(Z.Ord.test(Left(1)), true);
+    eq(Z.Ord.test(Left(Math.sqrt)), false);
   });
 
   test('"fantasy-land/map" method', function() {
@@ -180,8 +190,8 @@ suite('Right', function() {
     eq(Right(42)[FL.equals](Left(42)), false);
 
     // Value-based equality:
-    eq(Right(0)[FL.equals](Right(-0)), false);
-    eq(Right(-0)[FL.equals](Right(0)), false);
+    eq(Right(0)[FL.equals](Right(-0)), true);
+    eq(Right(-0)[FL.equals](Right(0)), true);
     eq(Right(NaN)[FL.equals](Right(NaN)), true);
     eq(Right([1, 2, 3])[FL.equals](Right([1, 2, 3])), true);
   });
@@ -189,6 +199,16 @@ suite('Right', function() {
   test('"fantasy-land/extend" method', function() {
     eq(Right(42)[FL.extend].length, 1);
     eq(Right(42)[FL.extend](function(x) { return x.value / 2; }), Right(21));
+  });
+
+  test('"fantasy-land/lte" method', function() {
+    eq(Z.lte(Right(1), Left(1)), false);
+    eq(Z.lte(Right(1), Right(0)), false);
+    eq(Z.lte(Right(1), Right(1)), true);
+    eq(Z.lte(Right(1), Right(2)), true);
+
+    eq(Z.Ord.test(Right(1)), true);
+    eq(Z.Ord.test(Right(Math.sqrt)), false);
   });
 
   test('"fantasy-land/map" method', function() {

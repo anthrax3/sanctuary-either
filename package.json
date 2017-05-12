@@ -11,7 +11,7 @@
     "test": "make lint test"
   },
   "dependencies": {
-    "sanctuary-type-classes": "4.0.x"
+    "sanctuary-type-classes": "5.1.x"
   },
   "devDependencies": {
     "doctest": "0.12.x",

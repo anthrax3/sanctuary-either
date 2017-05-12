@@ -16,7 +16,8 @@
 //.
 //. `Either a b` satisfies the following [Fantasy Land][] specifications:
 //.
-//.   - [Setoid][]
+//.   - [Setoid][] (if `a` and `b` satisfy Setoid)
+//.   - [Ord][] (if `a` and `b` satisfy Ord)
 //.   - [Semigroup][] (if `a` and `b` satisfy Semigroup)
 //.   - [Functor][]
 //.   - [Bifunctor][]
@@ -62,6 +63,14 @@
     //  and Right(123) do not.
     if (Z.Semigroup.test(this.value)) {
       this['fantasy-land/concat'] = Either$prototype$concat;
+    }
+
+    if (Z.Setoid.test(this.value)) {
+      this['fantasy-land/equals'] = Either$prototype$equals;
+    }
+
+    if (Z.Ord.test(this.value)) {
+      this['fantasy-land/lte'] = Either$prototype$lte;
     }
   }
 
@@ -184,9 +193,37 @@
   //. > Z.equals(Right([1, 2, 3]), Left([1, 2, 3]))
   //. false
   //. ```
-  Either.prototype['fantasy-land/equals'] = function(other) {
+  function Either$prototype$equals(other) {
     return other.isLeft === this.isLeft && Z.equals(other.value, this.value);
-  };
+  }
+
+  //# Either#fantasy-land/lte :: (Ord a, Ord b) => Either a b ~> Either a b -> Boolean
+  //.
+  //. Takes a value `e` of the same type and returns `true` if:
+  //.
+  //.   - `this` is a Left and `e` is a Right; or
+  //.
+  //.   - `this` and `e` are both Lefts or both Rights, and the value of `this`
+  //.     is less than or equal to the value of `e` according to [`lte`](#lte).
+  //.
+  //. ```javascript
+  //. > Z.lte(Either.Left(10), Either.Right(0))
+  //. true
+  //.
+  //. > Z.lte(Either.Right(0), Either.Left(10))
+  //. false
+  //.
+  //. > Z.lte(Either.Right(0), Either.Right(1))
+  //. true
+  //.
+  //. > Z.lte(Either.Right(1), Either.Right(0))
+  //. false
+  //. ```
+  function Either$prototype$lte(other) {
+    return this.isLeft === other.isLeft ?
+      Z.lte(this.value, other.value) :
+      this.isLeft;
+  }
 
   //# Either#fantasy-land/concat :: (Semigroup a, Semigroup b) => Either a b ~> Either a b -> Either a b
   //.
@@ -407,6 +444,7 @@
 //. [Foldable]:                     v:fantasyland/fantasy-land#foldable
 //. [Functor]:                      v:fantasyland/fantasy-land#functor
 //. [Monad]:                        v:fantasyland/fantasy-land#monad
+//. [Ord]:                          v:fantasyland/fantasy-land#ord
 //. [Semigroup]:                    v:fantasyland/fantasy-land#semigroup
 //. [Setoid]:                       v:fantasyland/fantasy-land#setoid
 //. [Traversable]:                  v:fantasyland/fantasy-land#traversable

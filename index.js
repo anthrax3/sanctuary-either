@@ -106,9 +106,9 @@
   //.
   //. ```javascript
   //. > Either['@@type']
-  //. 'sanctuary/Either@1'
+  //. 'sanctuary-either/Either@1'
   //. ```
-  Either['@@type'] = 'sanctuary/Either@1';
+  Either['@@type'] = 'sanctuary-either/Either@1';
 
   //# Either.fantasy-land/of :: b -> Either a b
   //.

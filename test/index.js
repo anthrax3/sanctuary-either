@@ -393,23 +393,23 @@ suite('Either', function() {
 
     test('naturality',
          laws.Traversable(Z.equals).naturality(
-           jsc.constant(function(right) { return [right.value]; }),
-           EitherArb(jsc.string, IdentityArb(jsc.number)),
            jsc.constant(Identity),
-           jsc.constant(Array)
+           jsc.constant(Array),
+           jsc.constant(function(right) { return [right.value]; }),
+           EitherArb(jsc.string, IdentityArb(jsc.number))
          ));
 
     test('identity',
          laws.Traversable(Z.equals).identity(
-           EitherArb(jsc.string, jsc.number),
-           jsc.constant(Identity)
+           jsc.constant(Identity),
+           EitherArb(jsc.string, jsc.number)
          ));
 
     test('composition',
          laws.Traversable(Z.equals).composition(
-           EitherArb(jsc.string, IdentityArb(EitherArb(jsc.string, jsc.number))),
            jsc.constant(Identity),
-           jsc.constant(Either)
+           jsc.constant(Either),
+           EitherArb(jsc.string, IdentityArb(EitherArb(jsc.string, jsc.number)))
          ));
 
   });

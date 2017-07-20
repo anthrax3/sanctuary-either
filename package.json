@@ -20,7 +20,7 @@
     "fantasy-laws": "fantasyland/fantasy-laws#cec77b1100342babdd679008754d9abeb909355d",
     "jsverify": "0.8.x",
     "mocha": "3.x.x",
-    "remark-cli": "3.x.x",
+    "remark-cli": "4.x.x",
     "remark-lint-no-undefined-references": "1.x.x",
     "remark-lint-no-unused-definitions": "1.x.x",
     "remember-bower": "0.1.x",

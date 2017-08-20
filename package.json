@@ -20,7 +20,7 @@
     "jsverify": "0.8.x",
     "mocha": "3.x.x",
     "sanctuary-identity": "sanctuary-js/sanctuary-identity#e122c2eb563b50d49a36f23e73fdf4f50ab57e48",
-    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#faabfe2bb88a1c6fad35ab6c7a372afba07f6f97"
+    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#5d855ffb318f8ffd2748c7c7eedcb28c82396d16"
   },
   "files": [
     "/LICENSE",

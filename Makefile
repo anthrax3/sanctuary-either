@@ -1,4 +1,3 @@
-DOCTEST = node_modules/.bin/doctest --module commonjs --prefix .
 MOCHA = node_modules/.bin/mocha --ui tdd
 NPM = npm
 
@@ -12,6 +11,11 @@ LICENSE:
 
 README.md: index.js package.json
 	node_modules/.bin/sanctuary-generate-readme index.js
+
+
+.PHONY: doctest
+doctest:
+	node_modules/.bin/sanctuary-doctest index.js
 
 
 .PHONY: lint
@@ -49,8 +53,4 @@ setup:
 .PHONY: test
 test:
 	$(MOCHA) -- test/index.js
-ifeq ($(shell node --version | cut -d . -f 1),v6)
-	$(DOCTEST) -- index.js
-else
-	@echo '[WARN] Doctests are only run in Node v6.x.x (current version is $(shell node --version))' >&2
-endif
+	make doctest

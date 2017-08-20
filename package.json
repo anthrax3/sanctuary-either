@@ -15,19 +15,12 @@
   },
   "devDependencies": {
     "doctest": "0.12.x",
-    "eslint": "3.19.x",
     "fantasy-land": "3.3.0",
     "fantasy-laws": "fantasyland/fantasy-laws#cec77b1100342babdd679008754d9abeb909355d",
     "jsverify": "0.8.x",
     "mocha": "3.x.x",
-    "remark-cli": "4.x.x",
-    "remark-lint-no-undefined-references": "1.x.x",
-    "remark-lint-no-unused-definitions": "1.x.x",
-    "remember-bower": "0.1.x",
-    "sanctuary-identity": "sanctuary-js/sanctuary-identity#e360a8330e2563be228e5e18d8a02bc103cfc344",
-    "sanctuary-style": "0.5.x",
-    "transcribe": "1.0.x",
-    "xyz": "2.1.x"
+    "sanctuary-identity": "sanctuary-js/sanctuary-identity#e122c2eb563b50d49a36f23e73fdf4f50ab57e48",
+    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#faabfe2bb88a1c6fad35ab6c7a372afba07f6f97"
   },
   "files": [
     "/LICENSE",

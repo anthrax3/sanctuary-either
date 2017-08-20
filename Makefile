@@ -1,4 +1,4 @@
-MOCHA = node_modules/.bin/mocha --ui tdd
+MOCHA = node_modules/.bin/mocha
 NPM = npm
 
 

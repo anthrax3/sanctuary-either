@@ -19,20 +19,9 @@ doctest:
 
 
 .PHONY: lint
-lint:
-	node_modules/.bin/sanctuary-lint-es3 \
-	  --global define \
-	  --global module \
-	  --global require \
-	  --global self \
-	  -- index.js
-	node_modules/.bin/sanctuary-lint-es3 \
-	  --env node \
-	  --global suite \
-	  --global test \
-	  --rule 'max-len: [off]' \
-	  -- test
+lint: $(shell find . -name '*.js' '(' -depth 1 -or -path './test/*' ')')
 	node_modules/.bin/sanctuary-check-required-files
+	node_modules/.bin/eslint -- $^
 	node_modules/.bin/sanctuary-lint-package-json
 	node_modules/.bin/sanctuary-lint-bower-json
 	node_modules/.bin/sanctuary-lint-readme

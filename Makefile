@@ -11,7 +11,7 @@ README.md: index.js package.json
 
 .PHONY: doctest
 doctest:
-	node_modules/.bin/sanctuary-doctest index.js
+	node_modules/.bin/sanctuary-doctest
 
 
 .PHONY: lint

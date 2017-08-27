@@ -1,7 +1,3 @@
-MOCHA = node_modules/.bin/mocha
-NPM = npm
-
-
 .PHONY: all
 all: LICENSE README.md
 
@@ -35,11 +31,11 @@ release-major release-minor release-patch:
 
 .PHONY: setup
 setup:
-	$(NPM) --version
-	$(NPM) install
+	npm --version
+	npm install
 
 
 .PHONY: test
 test:
-	$(MOCHA) -- test/index.js
+	node_modules/.bin/sanctuary-test
 	make doctest

@@ -18,7 +18,7 @@
     "fantasy-laws": "fantasyland/fantasy-laws#cec77b1100342babdd679008754d9abeb909355d",
     "jsverify": "0.8.x",
     "sanctuary-identity": "sanctuary-js/sanctuary-identity#e122c2eb563b50d49a36f23e73fdf4f50ab57e48",
-    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#d282175ba9f6b2e5ba2df5e21599423b57f51378"
+    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#8a0dd890732b7d24dd749b287baff2ea7d8bfbe2"
   },
   "files": [
     "/LICENSE",

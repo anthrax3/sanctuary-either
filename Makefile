@@ -6,7 +6,7 @@ LICENSE:
 	node_modules/.bin/sanctuary-update-copyright-year
 
 README.md: index.js package.json
-	node_modules/.bin/sanctuary-generate-readme index.js
+	node_modules/.bin/sanctuary-generate-readme
 
 
 .PHONY: doctest

@@ -8,7 +8,10 @@
     "url": "git://github.com/sanctuary-js/sanctuary-either.git"
   },
   "scripts": {
-    "test": "make lint test"
+    "doctest": "sanctuary-doctest",
+    "lint": "sanctuary-lint",
+    "release": "sanctuary-release",
+    "test": "npm run lint && sanctuary-test && npm run doctest"
   },
   "dependencies": {
     "sanctuary-type-classes": "6.0.x"
@@ -18,7 +21,7 @@
     "fantasy-laws": "fantasyland/fantasy-laws#cec77b1100342babdd679008754d9abeb909355d",
     "jsverify": "0.8.x",
     "sanctuary-identity": "sanctuary-js/sanctuary-identity#e122c2eb563b50d49a36f23e73fdf4f50ab57e48",
-    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#707661c14d16740a168650350bf7ff7781741aff"
+    "sanctuary-scripts": "sanctuary-js/sanctuary-scripts#899304efb66dbb72c756051a6b5f8b15a2033642"
   },
   "files": [
     "/LICENSE",

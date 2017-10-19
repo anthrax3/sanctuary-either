@@ -19,10 +19,11 @@ jobs:
             source "$NVM_DIR/nvm.sh"
             test_with_version() {
               nvm install $1
-              nvm exec $1 make setup test
+              nvm exec $1 npm install
+              nvm exec $1 npm test
             }
             case $CIRCLE_NODE_INDEX in
-              0) make setup lint test ;;
+              0) npm install && npm test ;;
               1) test_with_version 4 ;;
               2) test_with_version 7 ;;
               3) test_with_version 8 ;;

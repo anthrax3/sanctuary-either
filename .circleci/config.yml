@@ -20,6 +20,8 @@ jobs:
             test_with_version() {
               nvm install $1
               which -a npm
+              npm --version
+              /usr/local/bin/npm --version
               [[ $(npm --version | cut -d . -f 1) = 2 ]] && npm install --global npm@3.x.x
               nvm exec $1 npm install
               nvm exec $1 npm test

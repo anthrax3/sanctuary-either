@@ -21,7 +21,7 @@
     "types"
   ],
   "dependencies": {
-    "sanctuary-type-classes": "7.0.x"
+    "sanctuary-type-classes": "7.1.x"
   },
   "ignore": [
     "/.circleci/",

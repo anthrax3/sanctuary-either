@@ -6,6 +6,7 @@ var FL = require('fantasy-land');
 var laws = require('fantasy-laws');
 var jsc = require('jsverify');
 var Identity = require('sanctuary-identity');
+var show = require('sanctuary-show');
 var Z = require('sanctuary-type-classes');
 
 var Either = require('..');
@@ -17,19 +18,19 @@ var Right = Either.Right;
 
 function eq(actual, expected) {
   assert.strictEqual(arguments.length, eq.length);
-  assert.strictEqual(Z.toString(actual), Z.toString(expected));
+  assert.strictEqual(show(actual), show(expected));
   assert.strictEqual(Z.equals(actual, expected), true);
 }
 
 //  EitherArb :: Arbitrary a -> Arbitrary b -> Arbitrary (Either a b)
 function EitherArb(lArb, rArb) {
-  return jsc.oneof(lArb.smap(Either.Left, value, Z.toString),
-                   rArb.smap(Either.Right, value, Z.toString));
+  return jsc.oneof(lArb.smap(Either.Left, value, show),
+                   rArb.smap(Either.Right, value, show));
 }
 
 //  IdentityArb :: Arbitrary a -> Arbitrary (Identity a)
 function IdentityArb(arb) {
-  return arb.smap(Identity, value, Z.toString);
+  return arb.smap(Identity, value, show);
 }
 
 //  add_ :: (Number, Number) -> Number
@@ -130,14 +131,15 @@ suite('Left', function() {
     eq(Left('abc')[FL.reduce](function(x, y) { return x - y; }, 42), 42);
   });
 
-  test('"toString" method', function() {
-    eq(Left('abc').toString.length, 0);
-    eq(Left('abc').toString(), 'Left("abc")');
+  test('"@@show" method', function() {
+    eq(Left('abc')['@@show'].length, 0);
+    eq(Left('abc')['@@show'](), 'Left ("abc")');
+    eq(show(Left('abc')), 'Left ("abc")');
   });
 
   test('"inspect" method', function() {
     eq(Left('abc').inspect.length, 0);
-    eq(Left('abc').inspect(), 'Left("abc")');
+    eq(Left('abc').inspect(), 'Left ("abc")');
   });
 
 });
@@ -221,14 +223,15 @@ suite('Right', function() {
     eq(Right(5)[FL.reduce](function(x, y) { return x - y; }, 42), 37);
   });
 
-  test('"toString" method', function() {
-    eq(Right([1, 2, 3]).toString.length, 0);
-    eq(Right([1, 2, 3]).toString(), 'Right([1, 2, 3])');
+  test('"@@show" method', function() {
+    eq(Right([1, 2, 3])['@@show'].length, 0);
+    eq(Right([1, 2, 3])['@@show'](), 'Right ([1, 2, 3])');
+    eq(show(Right([1, 2, 3])), 'Right ([1, 2, 3])');
   });
 
   test('"inspect" method', function() {
     eq(Right([1, 2, 3]).inspect.length, 0);
-    eq(Right([1, 2, 3]).inspect(), 'Right([1, 2, 3])');
+    eq(Right([1, 2, 3]).inspect(), 'Right ([1, 2, 3])');
   });
 
 });

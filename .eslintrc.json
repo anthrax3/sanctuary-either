@@ -6,7 +6,7 @@
       "files": ["*.md"],
       "plugins": ["markdown"],
       "env": {"es6": true},
-      "globals": {"Either": false, "Left": false, "Right": false, "Z": false},
+      "globals": {"Either": false, "Left": false, "Right": false, "Z": false, "show": false},
       "rules": {
         "func-style": ["error", "declaration", {"allowArrowFunctions": true}],
         "strict": ["off"]

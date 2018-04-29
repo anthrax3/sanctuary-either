@@ -35,14 +35,15 @@
   'use strict';
 
   if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = f(require('sanctuary-type-classes'));
+    module.exports = f(require('sanctuary-show'),
+                       require('sanctuary-type-classes'));
   } else if (typeof define === 'function' && define.amd != null) {
-    define(['sanctuary-type-classes'], f);
+    define(['sanctuary-show', 'sanctuary-type-classes'], f);
   } else {
-    self.sanctuaryEither = f(self.sanctuaryTypeClasses);
+    self.sanctuaryEither = f(self.sanctuaryShow, self.sanctuaryTypeClasses);
   }
 
-}(function(Z) {
+}(function(show, Z) {
 
   'use strict';
 
@@ -144,20 +145,20 @@
   //. false
   //. ```
 
-  //# Either#toString :: Either a b ~> () -> String
+  //# Either#@@show :: Either a b ~> () -> String
   //.
   //. Returns the string representation of the Either.
   //.
   //. ```javascript
-  //. > Z.toString(Left('Cannot divide by zero'))
-  //. 'Left("Cannot divide by zero")'
+  //. > show(Left('Cannot divide by zero'))
+  //. 'Left ("Cannot divide by zero")'
   //.
-  //. > Z.toString(Right([1, 2, 3]))
-  //. 'Right([1, 2, 3])'
+  //. > show(Right([1, 2, 3]))
+  //. 'Right ([1, 2, 3])'
   //. ```
-  Either.prototype.toString = function() {
+  Either.prototype['@@show'] = function() {
     return (this.isLeft ? 'Left' : 'Right') +
-           '(' + Z.toString(this.value) + ')';
+           ' (' + show(this.value) + ')';
   };
 
   //# Either#inspect :: Either a b ~> () -> String
@@ -165,16 +166,16 @@
   //. Returns the string representation of the Either. This method is used by
   //. `util.inspect` and the REPL to format a Either for display.
   //.
-  //. See also [`Either#toString`][].
+  //. See also [`Either#@@show`][].
   //.
   //. ```javascript
   //. > Left('Cannot divide by zero').inspect()
-  //. 'Left("Cannot divide by zero")'
+  //. 'Left ("Cannot divide by zero")'
   //.
   //. > Right([1, 2, 3]).inspect()
-  //. 'Right([1, 2, 3])'
+  //. 'Right ([1, 2, 3])'
   //. ```
-  Either.prototype.inspect = function() { return this.toString(); };
+  Either.prototype.inspect = function() { return show(this); };
 
   //# Either#fantasy-land/equals :: Either a b ~> Either a b -> Boolean
   //.
@@ -447,9 +448,9 @@
 //. [Semigroup]:                    v:fantasyland/fantasy-land#semigroup
 //. [Setoid]:                       v:fantasyland/fantasy-land#setoid
 //. [Traversable]:                  v:fantasyland/fantasy-land#traversable
+//. [`Either#@@show`]:              #Either.prototype.@@show
 //. [`Either#fantasy-land/bimap`]:  #Either.prototype.fantasy-land/bimap
 //. [`Either#fantasy-land/map`]:    #Either.prototype.fantasy-land/map
-//. [`Either#toString`]:            #Either.prototype.toString
 //. [`of`]:                         v:fantasyland/fantasy-land#of-method
 //. [type identifier]:              https://github.com/sanctuary-js/sanctuary-type-identifiers
 //. [type representative]:          https://sanctuary.js.org/#type-representatives

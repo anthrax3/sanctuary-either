@@ -331,10 +331,9 @@
   //. it returns the result of applying the function to this Right's value.
   //.
   //. ```javascript
-  //. > global.sqrt = n =>
+  //. > const sqrt = n =>
   //. .   n < 0 ? Left('Cannot represent square root of negative number')
   //. .         : Right(Math.sqrt(n))
-  //. sqrt
   //.
   //. > Z.chain(sqrt, Left('Cannot divide by zero'))
   //. Left('Cannot divide by zero')
